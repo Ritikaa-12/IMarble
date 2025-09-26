@@ -22,14 +22,15 @@ public class Staff_Salary {
 	@Column(name="salary_id")
 	private Integer salaryId;
 	
+	//---------------------
 	@Column(name="staff_id", nullable =false)
 	private Integer staffId;
 	
 	@Column(name="month", nullable =false)
-	private LocalDate month;
+	private String month;
 	
 	@Column(name="year", nullable =false)
-	private LocalDate year;
+	private String year;
 	
 	@Column(name="amount", nullable =false)
 	private Float amount;

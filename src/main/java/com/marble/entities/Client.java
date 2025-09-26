@@ -24,5 +24,7 @@ public class Client {
 	private String mobile;
 	private String email;
 	private String address;
+	//ask++++++++++++++++++++++++++++++++++
+	@Column(nullable = true)
 	private Integer gstNo;
 }

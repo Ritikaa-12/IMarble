@@ -19,14 +19,18 @@ public class Product {
 	@Column(name="product_id")
     private Integer productId;
 	
+	//---------------------
 	@Column(name="category_id", nullable =false)
     private Integer categoryId;
+	//---------------------	
+	@Column(name="subcategory_id", nullable =false)
+    private Integer subCategoryId;
 	
 	@Column(name="title", nullable =false)
     private String title;
 	
 	@Column(name="unit", nullable =false)
-    private String unit;
+    private Integer unit;
 	
 	@Column(name="description", nullable =false)
     private String description;
@@ -34,6 +38,7 @@ public class Product {
 	@Column(name="price_per_unit", nullable =false)
     private Float pricePerUnit;
 	
+	//---------------------
 	@Column(name="brand_id", nullable =false)
     private String brandId;
 }

@@ -1,5 +1,7 @@
 package com.marble.entities;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,16 +15,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class Purchase_Product {
+public class Notification {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="purchase_product_id")
+	@Column(name="notification_id")
+	private Integer notificationId;
+	private String type;
+	private String message;
+	private Integer target;//user ko bhejre he ki kisko bhejre h/role
 	
-    private Integer purchaseProductId;
-	//-----------------------------------------------------------
-    private Integer purchase_entry_id;
-  //-----------------------------------------------------------
-    private Integer product_id;
-    private Integer quantity;
-    private Float amount;
+	
 }

@@ -13,16 +13,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class Purchase_Product {
+public class Order {
+ 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="purchase_product_id")
+	@Column(name="order_id")
+	private Integer orderId;
 	
-    private Integer purchaseProductId;
-	//-----------------------------------------------------------
-    private Integer purchase_entry_id;
-  //-----------------------------------------------------------
-    private Integer product_id;
-    private Integer quantity;
-    private Float amount;
+	//--------------------------------------
+	private Integer  customerId;
+	//--------------------------------------
+	private Integer  branchId;
+	
+	@Column(nullable = false)
+	private Integer orderNo;
+	
+	private String items;
+	
+	private String status;
+	
+	private Float totalAmount;
 }

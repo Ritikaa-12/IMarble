@@ -20,6 +20,7 @@ public class SubCategory {
 	@Column(name="subcategory_id")
 	private Integer subCategoryId;
 	
+	//---------------------
 	private Integer categoryId;
 	
 	@Column(name="title", nullable =false)
@@ -29,8 +30,9 @@ public class SubCategory {
 	private String description;
 	
 	@Column(name="status", nullable =false)
-	private String status;
+	private Boolean status;
 	
+	// ask ++++++++++++++++++++++++++++++++++++++++++++
 	@Column(name="images", nullable =false)
 	private String images;
 	

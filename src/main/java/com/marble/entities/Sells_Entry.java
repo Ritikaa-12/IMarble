@@ -22,12 +22,17 @@ public class Sells_Entry {
 	@Column(name="sells_entry_id")
 	private Integer sellsEntryId;
 	
+	//-----------------------------------------------------------
 	private Integer sellsProductId;
+	//-----------------------------------------------------------
 	private Integer dealerId;
+	//-----------------------------------------------------------
 	private String type;
 	private Float billAmount;
 	private LocalDate date;
-	private Integer branchId;
+	//-----------------------------------------------------------
+	private Integer shopId;
+	//(booked/dispatched/done)
 	private String status;
 	
 }

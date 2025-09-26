@@ -21,7 +21,8 @@ public class Staff {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="staff_id")
 	private Integer staffId;
-	
+
+	//---------------------
 	@Column(name="user_id", nullable =false)
 	private Integer userId;
 	
@@ -49,5 +50,7 @@ public class Staff {
 	@Column(name="base_salary", nullable =false)
 	private String base_salary;
 	
+	
+	//---------------------
 	private Integer shopId;
 }

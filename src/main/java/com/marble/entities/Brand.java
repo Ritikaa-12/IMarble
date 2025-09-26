@@ -20,5 +20,7 @@ public class Brand {
 	@Column(name="brand_id")
 	private Integer brand_id;
 	private String title;
+	
+	//ask++++++++++++++++++++++++++++
 	private String image;
 }
