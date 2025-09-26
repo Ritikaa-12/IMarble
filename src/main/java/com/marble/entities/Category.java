@@ -27,7 +27,9 @@ public class Category {
 	private String description;
 	
 	@Column(name="status", nullable =false)
-	private String status;
+	private Boolean status;
+	
+	// ask+++++++++++++++++++++++++++++++++
 	
 	@Column(name="images", nullable =false)
 	private String images;

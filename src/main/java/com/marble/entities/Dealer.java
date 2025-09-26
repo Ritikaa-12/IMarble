@@ -20,10 +20,12 @@ public class Dealer {
 	@Column(name="dealer_id")
      private Integer dealerId;
 	
-     private String type;
+     private String type;//(Purchase / seller)
      private String name;
      private String mobile;
+     @Column(nullable = true)
      private String email;
      private String address;
+     //ask++++++++++++++++++++++
      private Integer gstNo;
 }

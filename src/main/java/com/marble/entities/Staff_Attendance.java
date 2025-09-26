@@ -22,6 +22,7 @@ public class Staff_Attendance {
 	@Column(name="attendance_id")
 	private Integer attendanceId;
 	
+	//---------------------
 	@Column(name="staff_id", nullable =false)
 	private Integer staffId;
 	

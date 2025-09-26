@@ -1,5 +1,7 @@
 package com.marble.entities;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,16 +15,27 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class Sells_product {
+public class StockTransaction {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="selle_prod_id")
-	private Integer sellsProductId;
-	//-----------------------------------------------------------
-	private Integer sellsEntryId;
-	//-----------------------------------------------------------
+	@Column(name="stock_transaction_id")
+	private Integer stockTransId;
+	//-------------------------------------
+	@Column(nullable =false)
 	private Integer productId;
+	//-----------------------------------------
+	@Column( nullable =false)
+	private Integer branchId;
+	
+	@Column( nullable =false)
+	private String type;
+	
+	
+	@Column( nullable =false)
 	private Integer quantity;
-	private Float amount;
-}
+	
+	@Column(nullable =false)
+	private LocalDate date;
+	
+	}

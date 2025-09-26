@@ -13,16 +13,27 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class Purchase_Product {
+public class ReturnRequest {
+ 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="purchase_product_id")
+	@Column(name="return_id")
+	private Integer returnId;
 	
-    private Integer purchaseProductId;
-	//-----------------------------------------------------------
-    private Integer purchase_entry_id;
-  //-----------------------------------------------------------
-    private Integer product_id;
-    private Integer quantity;
-    private Float amount;
+	//--------------------------------------
+	private Integer  orderId;
+	//--------------------------------------
+	private Integer  orderItemId;
+	
+	private String status;
+	
+	private Integer reselleableQty;
+
+	private Integer damagedQty;
+	
+	
+	
+	
+	
+	
 }

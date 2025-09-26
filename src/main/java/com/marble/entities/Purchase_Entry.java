@@ -21,7 +21,7 @@ public class Purchase_Entry {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="purchase_entry_id")
 	private Integer purchaseEntryId;
-	
+//-----------------------------------------------------------
 	@Column(name="dealer_id", nullable =false)
 	private Integer dealerId;
 	
@@ -29,6 +29,7 @@ public class Purchase_Entry {
 	private Float totalAmount;
 	
 	private LocalDate purchaseDate;
+	//-----------------------------------------------------------
 	private Integer invoiceNo;
 	
 }

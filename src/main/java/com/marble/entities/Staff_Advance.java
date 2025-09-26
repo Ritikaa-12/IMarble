@@ -21,9 +21,10 @@ public class Staff_Advance {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="advance_id")
 	private Integer advanceId;
+	//---------------------
 	private Integer staffId;
 	private Float amount;
 	private LocalDate date;
-	private Boolean remarks;
+	private Boolean remarks; // advance payment done or not
 	private String paymentMode;
 }
