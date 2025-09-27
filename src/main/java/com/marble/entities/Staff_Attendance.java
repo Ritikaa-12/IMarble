@@ -32,7 +32,7 @@ public class Staff_Attendance {
 	@Column(name="date", nullable =false)
 	private LocalDate date;
 	
-	@Column(name="status", nullable =false)
+	@Column(name="status", nullable =false)//(Absent/Half-Day)
 	private String status;
 	
 }

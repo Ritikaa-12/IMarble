@@ -33,7 +33,7 @@ public class Staff {
 	private String name;
 	
 	@Column(name="role", nullable =false)
-	private String role;
+	private String role;//role : Manager , Dispatcher , Recepionist , Worker
 	
 	@Column(name="mobile", nullable =false)
 	private String mobile;
@@ -47,7 +47,7 @@ public class Staff {
 	@Column(name="leaving_date", nullable =false)
 	private LocalDate leavingDate;
 	
-	@Column(name="salary_type", nullable =false)
+	@Column(name="salary_type", nullable =false)//salary_type : daily / monthly
 	private String salaryType;
 	
 	@Column(name="base_salary", nullable =false)

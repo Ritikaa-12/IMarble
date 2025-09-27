@@ -33,6 +33,12 @@ public class Product {
     @JoinColumn(name = "subcategory_id", nullable = false)  // foreign key
     private SubCategory subCategory;
 	
+
+    //Many Products belong to One Brand
+    @ManyToOne
+    @JoinColumn(name = "brand_id", nullable = false)
+    private Brand brand;
+    
 	@Column(name="title", nullable =false)
     private String title;
 	
@@ -45,8 +51,7 @@ public class Product {
 	@Column(name="price_per_unit", nullable =false)
     private Float pricePerUnit;
 	
-	 //Many Products belong to One Brand
-    @ManyToOne
-    @JoinColumn(name = "brand_id", nullable = false)
-    private Brand brand;
+	private String modelNo;//(HSN code)
+	private String image;
+	private Integer minStockLevel;
 }

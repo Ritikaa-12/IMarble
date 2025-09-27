@@ -29,18 +29,15 @@ public class StockTransaction {
 	@JoinColumn(name="product_id",nullable=false)
 	private Product product;
 	
-	//-----------------------------------------
-	@ManyToOne
-	@JoinColumn(name="shop_id",nullable=false)
-	private Shop shop;
-	
 	@Column( nullable =false)
-	private String type;
+	private String type;//(purchase/sells/missing)
 	
 	@Column( nullable =false)
 	private Integer quantity;
 	
-	@Column(nullable =false)
-	private LocalDate date;
+	@Column( nullable =false)
+	private String status;
+	
+	private Integer referenceId;
 	
 	}

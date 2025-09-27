@@ -23,8 +23,8 @@ public class Stock {
 	@Column(nullable =false)
 	private Integer productId;
 	
-	@Column( nullable =false)
-	private Integer branchId;
+	@Column(nullable =false)
+	private Integer shopId;
 	
 	@Column( nullable =false)
 	private Integer quantityAvailable;
