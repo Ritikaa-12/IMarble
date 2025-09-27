@@ -32,10 +32,9 @@ public class ReturnRequest {
     @JoinColumn(name = "order_item_id", nullable = false)
     private OrderItem orderItem;
 	
-	private String status;
-	
-	private Integer reselleableQty;
-
-	private Integer damagedQty;
+    private Integer quantity;
+    private String type;//(missing/damage)
+    private String description;
+    
 	
 }

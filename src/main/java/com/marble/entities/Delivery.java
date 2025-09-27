@@ -1,5 +1,7 @@
 package com.marble.entities;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,9 +32,7 @@ public class Delivery {
 	@Column(nullable = false)
 	private Integer deliverystaffId;
 	
-	
-	
 	private String status;//(delivered ,on ther way,cancelled,not delivered)
-	
+	private LocalDate date;
 	private String deliveredAt;//(addressssssssssssss)
 }

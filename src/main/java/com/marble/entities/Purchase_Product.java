@@ -27,7 +27,6 @@ public class Purchase_Product {
 	 @JoinColumn(name = "purchase_entry_id", nullable = false)
 	 private Purchase_Entry purchaseEntry;
 	 
-	 
   //Many purchase product belongs to one product id
 	@ManyToOne
 	@JoinColumn(name = "product_id", nullable = false)

@@ -43,4 +43,7 @@ public class Staff_Salary {
 	
 	@Column(name="payment_mode", nullable =false)
 	private String paymentMode;
+	
+	@Column(name="description", nullable =false)
+	private String description;
 }

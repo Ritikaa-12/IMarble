@@ -20,15 +20,16 @@ public class Shop {
 	@Column(name="shop_id")
 	private Integer shopId;
 	
-	@Column(name="title", nullable =false)
-	private String title;
+	@Column(name="name", nullable =false)
+	private String name;
 	
 	@Column(name="location", nullable =false)
 	private String location;
 	
-	@Column(name="owner_id", nullable =false)
-	private Integer ownerId;
-	
 	@Column(name="status", nullable =false)
 	private String status;
+	
+	@Column(name="mobile", nullable =false)
+	private String mobile;
+	
 }

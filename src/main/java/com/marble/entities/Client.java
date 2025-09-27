@@ -24,6 +24,7 @@ public class Client {
 	private String mobile;
 	private String email;
 	private String address;
+	private String type;// (purchaseDealer,sellsDealer,client)
 	//ask++++++++++++++++++++++++++++++++++
 	@Column(nullable = true)
 	private Integer gstNo;

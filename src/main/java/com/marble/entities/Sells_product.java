@@ -19,7 +19,7 @@ public class Sells_product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="selle_prod_id")
+	@Column(name="sells_prod_id")
 	private Integer sellsProductId;
 	
 	//bht sare sells product ki single entry ho sakti hai

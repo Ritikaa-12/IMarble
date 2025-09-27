@@ -26,14 +26,14 @@ public class Purchase_Entry {
 	
     //many purchase entry belongs to one dealer
 	@ManyToOne
-	@JoinColumn(name = "dealer_id", nullable = false)
-	private Dealer dealer;
+	@JoinColumn(name = "client_id", nullable = false)
+	private Client client;
 	
 	@Column(name="total_amount", nullable =false)
 	private Float totalAmount;
 	
 	private LocalDate purchaseDate;
 	//-----------------------------------------------------------
-	private Integer invoiceNo;
+	private String invoiceNo;
 	
 }

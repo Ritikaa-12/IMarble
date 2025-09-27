@@ -28,13 +28,13 @@ public class Sells_Entry {
 	//SellsEntry because products are linked via SellsProduct entity.
 	private Integer sellsProductId;
 	
-	//many sells entry belong to one dealer
+	//many sells entry belong to one client
     @ManyToOne
-    @JoinColumn(name = "dealer_id", nullable = false)
-    private Dealer dealer;
+    @JoinColumn(name = "client_id", nullable = false)
+    private Client client;
     
 	//-----------------------------------------------------------
-	private String type;
+	private String type;//(client,dealer)
 	private Float billAmount;
 	private LocalDate date;
 	
@@ -43,6 +43,8 @@ public class Sells_Entry {
     @JoinColumn(name = "shop_id", nullable = false)
     private Shop shop;
 	
+    private String invoiceNo;
+    
 	//(booked/dispatched/done)
 	private String status;
 	

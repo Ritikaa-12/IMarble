@@ -33,7 +33,8 @@ public class User {
 	private String password;
 	
 	@Column(name="role", nullable =false)
-	private String role;
+	private String role;//role : Manager , Dispatcher , Recepionist , Admin
+
 	
 	@Column(name="status", nullable =false)
 	private String status;

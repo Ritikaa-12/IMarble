@@ -23,4 +23,5 @@ public class Brand {
 	
 	//ask++++++++++++++++++++++++++++
 	private String image;
+	private Boolean status;
 }
