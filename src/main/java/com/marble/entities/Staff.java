@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,9 +24,10 @@ public class Staff {
 	@Column(name="staff_id")
 	private Integer staffId;
 
-	//---------------------
-	@Column(name="user_id", nullable =false)
-	private Integer userId;
+	 //recheck krna  
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 	
 	@Column(name="name", nullable =false)
 	private String name;
@@ -51,6 +54,8 @@ public class Staff {
 	private String base_salary;
 	
 	
-	//---------------------
-	private Integer shopId;
+	// Many Staff members can belong to one Shop
+    @ManyToOne
+    @JoinColumn(name = "shop_id", nullable = false) 
+    private Shop shop;
 }

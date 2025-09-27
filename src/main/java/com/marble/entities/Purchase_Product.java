@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,10 +21,18 @@ public class Purchase_Product {
 	@Column(name="purchase_product_id")
 	
     private Integer purchaseProductId;
-	//-----------------------------------------------------------
-    private Integer purchase_entry_id;
-  //-----------------------------------------------------------
-    private Integer product_id;
+	
+	//Many purchase product belongs to one product entry
+	 @ManyToOne
+	 @JoinColumn(name = "purchase_entry_id", nullable = false)
+	 private Purchase_Entry purchaseEntry;
+	 
+	 
+  //Many purchase product belongs to one product id
+	@ManyToOne
+	@JoinColumn(name = "product_id", nullable = false)
+	private Product product;
+	    
     private Integer quantity;
     private Float amount;
 }

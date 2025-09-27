@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,12 +21,17 @@ public class Product {
 	@Column(name="product_id")
     private Integer productId;
 	
-	//---------------------
-	@Column(name="category_id", nullable =false)
-    private Integer categoryId;
-	//---------------------	
-	@Column(name="subcategory_id", nullable =false)
-    private Integer subCategoryId;
+
+	 //Many products belong to one category
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false) // foreign key
+    private Category category;
+    
+    
+    //Many Products belong to One SubCategory
+    @ManyToOne
+    @JoinColumn(name = "subcategory_id", nullable = false)  // foreign key
+    private SubCategory subCategory;
 	
 	@Column(name="title", nullable =false)
     private String title;
@@ -38,7 +45,8 @@ public class Product {
 	@Column(name="price_per_unit", nullable =false)
     private Float pricePerUnit;
 	
-	//---------------------
-	@Column(name="brand_id", nullable =false)
-    private String brandId;
+	 //Many Products belong to One Brand
+    @ManyToOne
+    @JoinColumn(name = "brand_id", nullable = false)
+    private Brand brand;
 }

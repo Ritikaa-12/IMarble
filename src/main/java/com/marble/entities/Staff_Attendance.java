@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,9 +24,10 @@ public class Staff_Attendance {
 	@Column(name="attendance_id")
 	private Integer attendanceId;
 	
-	//---------------------
-	@Column(name="staff_id", nullable =false)
-	private Integer staffId;
+	// many attendance belongs to one staff person 
+    @ManyToOne
+    @JoinColumn(name="staff_id",nullable=false)
+    private Staff staff;
 	
 	@Column(name="date", nullable =false)
 	private LocalDate date;
