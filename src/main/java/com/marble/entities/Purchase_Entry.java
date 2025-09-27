@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,9 +23,11 @@ public class Purchase_Entry {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="purchase_entry_id")
 	private Integer purchaseEntryId;
-//-----------------------------------------------------------
-	@Column(name="dealer_id", nullable =false)
-	private Integer dealerId;
+	
+    //many purchase entry belongs to one dealer
+	@ManyToOne
+	@JoinColumn(name = "dealer_id", nullable = false)
+	private Dealer dealer;
 	
 	@Column(name="total_amount", nullable =false)
 	private Float totalAmount;
