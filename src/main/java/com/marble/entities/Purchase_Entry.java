@@ -24,7 +24,7 @@ public class Purchase_Entry {
 	@Column(name="purchase_entry_id")
 	private Integer purchaseEntryId;
 	
-    //many purchase entry belongs to one dealer
+    //many purchase entry belongs to one dealer          Client
 	@ManyToOne
 	@JoinColumn(name = "client_id", nullable = false)
 	private Client client;
