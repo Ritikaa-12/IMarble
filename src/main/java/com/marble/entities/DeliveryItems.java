@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
+// Dispatch Item
 public class DeliveryItems {
 
 	private Integer deliverItemId;

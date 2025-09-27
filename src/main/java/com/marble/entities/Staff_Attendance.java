@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,8 +25,8 @@ public class Staff_Attendance {
 	@Column(name="attendance_id")
 	private Integer attendanceId;
 	
-	// many attendance belongs to one staff person 
-    @ManyToOne
+	// one staff person   - One Attendance //  ASk++++++++++++++++++++Chatg 
+    @OneToOne
     @JoinColumn(name="staff_id",nullable=false)
     private Staff staff;
 	

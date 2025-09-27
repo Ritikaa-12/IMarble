@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,8 +35,8 @@ public class Product {
     private SubCategory subCategory;
 	
 
-    //Many Products belong to One Brand
-    @ManyToOne
+    //Many Products belong to One Brand // ASK++++++++++++++++++++Chatg
+    @ManyToMany
     @JoinColumn(name = "brand_id", nullable = false)
     private Brand brand;
     

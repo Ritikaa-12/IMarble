@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,8 +25,8 @@ public class Staff_Salary {
 	@Column(name="salary_id")
 	private Integer salaryId;
 	
-	//several times- salary belong to one staff person
-	@ManyToOne
+	//several times- salary belong to one staff person // ASk+++++++++++++Chat G
+	@OneToOne
 	@JoinColumn(name="staff_id",nullable=false)
 	private Staff staff;
 	

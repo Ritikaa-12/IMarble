@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
+// Stock Tracker
 public class StockTransaction {
 
 	@Id
@@ -25,12 +26,13 @@ public class StockTransaction {
 	private Integer stockTransId;
 	
 	//-------------------------------
+	// sir  ++++++++++++++++++++++++++++++++++++++++
 	@ManyToOne
 	@JoinColumn(name="product_id",nullable=false)
 	private Product product;
 	
 	@Column( nullable =false)
-	private String type;//(purchase/sells/missing)
+	private String type;              //           (purchase/sells/missing)
 	
 	@Column( nullable =false)
 	private Integer quantity;
@@ -38,6 +40,6 @@ public class StockTransaction {
 	@Column( nullable =false)
 	private String status;
 	
-	private Integer referenceId;
+	private Integer referenceId; // sir+++++++++++++++
 	
 	}

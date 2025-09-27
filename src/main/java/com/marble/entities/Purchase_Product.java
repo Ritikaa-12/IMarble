@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
+
+
 public class Purchase_Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +29,7 @@ public class Purchase_Product {
 	 @JoinColumn(name = "purchase_entry_id", nullable = false)
 	 private Purchase_Entry purchaseEntry;
 	 
-  //Many purchase product belongs to one product id
+  //Many purchase product belongs to one product id // ask ++++++++++++++Chatg
 	@ManyToOne
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
