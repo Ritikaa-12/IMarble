@@ -25,7 +25,7 @@ public class OrderItem {
 	//many order item belong to one order(ek order m bht sare items bula sakte h)
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
+    private Orderr order;
 
     //many order item belong to on product
     @ManyToOne

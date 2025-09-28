@@ -27,7 +27,7 @@ public class ReturnRequest {
 	//ho sakta h customer total 5 product m se 2 abhi return kre aur 3 baad m
     @ManyToOne				// ask ++++++++++++++++
     @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
+    private Orderr order;
 
     //ho sakta h customer total 5 "same" product m se 2 abhi return kre aur 3 baad m
     @ManyToOne			// ask+++++++++++++++++++++++++
