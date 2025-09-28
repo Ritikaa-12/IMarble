@@ -7,6 +7,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,14 +25,15 @@ public class Staff_Attendance {
 	@Column(name="attendance_id")
 	private Integer attendanceId;
 	
-	//---------------------
-	@Column(name="staff_id", nullable =false)
-	private Integer staffId;
+	// one staff person   - One Attendance //  ASk++++++++++++++++++++Chatg 
+    @OneToOne
+    @JoinColumn(name="staff_id",nullable=false)
+    private Staff staff;
 	
 	@Column(name="date", nullable =false)
 	private LocalDate date;
 	
-	@Column(name="status", nullable =false)
+	@Column(name="status", nullable =false)//(Absent/Half-Day)
 	private String status;
 	
 }

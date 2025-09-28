@@ -1,10 +1,17 @@
 package com.marble.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,17 +20,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class Order {
+public class Orderr {
  
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="order_id")
 	private Integer orderId;
 	
-	//--------------------------------------
-	private Integer  customerId;
-	//--------------------------------------
-	private Integer  branchId;
+	   @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	    private List<OrderItem> orderItems = new ArrayList<>();
+	//many orders belong to one client....
+	@ManyToOne
+	@JoinColumn(name = "client_id", nullable = false)
+	private Client client;
+	  
+	//many orders belong to one shop...
+	@ManyToOne
+	@JoinColumn(name = "shop_id", nullable = false)
+	private Shop shop;
 	
 	@Column(nullable = false)
 	private Integer orderNo;

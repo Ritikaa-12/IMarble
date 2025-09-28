@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +15,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
+
+// Missing Item
 public class ReturnRequest {
  
 	@Id
@@ -20,20 +24,19 @@ public class ReturnRequest {
 	@Column(name="return_id")
 	private Integer returnId;
 	
-	//--------------------------------------
-	private Integer  orderId;
-	//--------------------------------------
-	private Integer  orderItemId;
-	
-	private String status;
-	
-	private Integer reselleableQty;
+	//ho sakta h customer total 5 product m se 2 abhi return kre aur 3 baad m
+    @ManyToOne				// ask ++++++++++++++++
+    @JoinColumn(name = "order_id", nullable = false)
+    private Orderr order;
 
-	private Integer damagedQty;
+    //ho sakta h customer total 5 "same" product m se 2 abhi return kre aur 3 baad m
+    @ManyToOne			// ask+++++++++++++++++++++++++
+    @JoinColumn(name = "order_item_id", nullable = false)
+    private OrderItem orderItem;
 	
-	
-	
-	
-	
+    private Integer quantity;
+    private String type;                    //           (missing/damage)
+    private String description;
+    
 	
 }

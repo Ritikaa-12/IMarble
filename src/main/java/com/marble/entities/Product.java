@@ -1,10 +1,17 @@
 package com.marble.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,13 +26,28 @@ public class Product {
 	@Column(name="product_id")
     private Integer productId;
 	
-	//---------------------
-	@Column(name="category_id", nullable =false)
-    private Integer categoryId;
-	//---------------------	
-	@Column(name="subcategory_id", nullable =false)
-    private Integer subCategoryId;
+
+	 //Many products belong to one category
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false) // foreign key
+    private Category category;
+    
+    
+    //Many Products belong to One SubCategory
+    @ManyToOne
+    @JoinColumn(name = "subcategory_id", nullable = false)  // foreign key
+    private SubCategory subCategory;
 	
+
+    //Many Products belong to One Brand // ASK++++++++++++++++++++Chatg
+    @ManyToMany
+    @JoinTable(
+        name = "product_brand",
+        joinColumns = @JoinColumn(name = "product_id"),
+        inverseJoinColumns = @JoinColumn(name = "brand_id")
+    )
+    private Set<Brand> brands = new HashSet<>();
+    
 	@Column(name="title", nullable =false)
     private String title;
 	
@@ -38,7 +60,7 @@ public class Product {
 	@Column(name="price_per_unit", nullable =false)
     private Float pricePerUnit;
 	
-	//---------------------
-	@Column(name="brand_id", nullable =false)
-    private String brandId;
+	private String modelNo;//(HSN code)
+	private String image;
+	private Integer minStockLevel;
 }

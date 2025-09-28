@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,27 +17,29 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
+// Stock Tracker
 public class StockTransaction {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="stock_transaction_id")
 	private Integer stockTransId;
-	//-------------------------------------
-	@Column(nullable =false)
-	private Integer productId;
-	//-----------------------------------------
-	@Column( nullable =false)
-	private Integer branchId;
+	
+	//-------------------------------
+	// sir  ++++++++++++++++++++++++++++++++++++++++
+	@ManyToOne
+	@JoinColumn(name="product_id",nullable=false)
+	private Product product;
 	
 	@Column( nullable =false)
-	private String type;
-	
+	private String type;              //           (purchase/sells/missing)
 	
 	@Column( nullable =false)
 	private Integer quantity;
 	
-	@Column(nullable =false)
-	private LocalDate date;
+	@Column( nullable =false)
+	private String status;
+	
+	private Integer referenceId; // sir+++++++++++++++
 	
 	}

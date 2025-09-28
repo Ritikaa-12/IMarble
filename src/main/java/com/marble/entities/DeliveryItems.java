@@ -1,6 +1,5 @@
 package com.marble.entities;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,24 +14,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class Sells_product {
+// Dispatch Item
+public class DeliveryItems {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="sells_prod_id")
-	private Integer sellsProductId;
+	private Integer deliverItemId;
 	
-	//bht sare sells product ki single entry ho sakti hai
 	@ManyToOne
-	@JoinColumn(name = "sells_entry_id", nullable = false)
-	private Sells_Entry sellsEntry;
-
-	//bht sare sells product ek single product id ko belong kr sakte hai
+	@JoinColumn(name="delivery_id",nullable=false)
+	private Delivery delivery;
+	
     @ManyToOne
-	@JoinColumn(name = "product_id", nullable = false)
-	private Product product;
+    @JoinColumn(name = "sells_prod_id", nullable = false)
+    private Sells_product sells_product;
+    
+    private Integer quantity;
 	
-	private Integer quantity;
 	
-	private Float amount;
 }
