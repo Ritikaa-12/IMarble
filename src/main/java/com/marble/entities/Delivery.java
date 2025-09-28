@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
@@ -27,9 +28,9 @@ public class Delivery {
 	private Integer deliveryId;
 	
 	//--------------------------------------
-	@OneToMany
-	@JoinColumn(name = "order_id",nullable = false)
-	private Integer  orderId;
+	@ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
+    private Orderr order;
 	//--------------------------------------
 	//ask+++++ how to get a dispatcher ID
 	//private Integer  dId;
