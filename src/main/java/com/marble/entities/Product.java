@@ -1,66 +1,39 @@
 package com.marble.entities;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Entity
 public class Product {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="product_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer productId;
-	
 
-	 //Many products belong to one category
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false) // foreign key
-    private Category category;
-    
-    
-    //Many Products belong to One SubCategory
-    @ManyToOne
-    @JoinColumn(name = "subcategory_id", nullable = false)  // foreign key
-    private SubCategory subCategory;
-	
-
-    //Many Products belong to One Brand // ASK++++++++++++++++++++Chatg
-    @ManyToMany
-    @JoinTable(
-        name = "product_brand",
-        joinColumns = @JoinColumn(name = "product_id"),
-        inverseJoinColumns = @JoinColumn(name = "brand_id")
-    )
-    private Set<Brand> brands = new HashSet<>();
-    
-	@Column(name="title", nullable =false)
+    @Column(nullable = false)
     private String title;
-	
-	@Column(name="unit", nullable =false)
-    private Integer unit;
-	
-	@Column(name="description", nullable =false)
+
+    @Column(columnDefinition = "TEXT") // For longer descriptions
     private String description;
-	
-	@Column(name="price_per_unit", nullable =false)
-    private Float pricePerUnit;
-	
-	private String modelNo;//(HSN code)
-	private String image;
-	private Integer minStockLevel;
+    
+    // A Product now belongs to ONLY ONE SubCategory
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subcategory_id")
+    private SubCategory subCategory;
+    
+    // A Product now belongs to ONLY ONE Brand (Simpler & more common)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
+
+    @Column(nullable = false)
+    private Double pricePerUnit;
+
+    private String unit; // e.g., "sq. ft.", "piece"
+
+    private String modelNo; // (HSN code)
+
+    private String image; // URL for the main product image
+
+    private Integer minStockLevel;
 }
