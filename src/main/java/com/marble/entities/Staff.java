@@ -27,7 +27,7 @@ public class Staff {
 	 //recheck krna  
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Users users;
 	
 	@Column(name="name", nullable =false)
 	private String name;

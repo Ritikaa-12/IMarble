@@ -27,9 +27,7 @@ public class Orderr {
 	@Column(name="order_id")
 	private Integer orderId;
 	
-	   @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-	    private List<OrderItem> orderItems = new ArrayList<>();
-	//many orders belong to one client....
+	  	//many orders belong to one client....
 	@ManyToOne
 	@JoinColumn(name = "client_id", nullable = false)
 	private Client client;
