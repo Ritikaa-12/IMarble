@@ -26,6 +26,11 @@ public class Product {
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = true)
+    private Category category;
+
+    
     @Column(nullable = false)
     private Double pricePerUnit;
 

@@ -11,9 +11,10 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 public class SubCategory {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer subCategoryId;
+	 @Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY) // only ONE auto_increment
+	    @Column(name = "subcategory_id")
+	    private Integer subCategoryId;
 
     @Column(nullable = false)
     private String title;
