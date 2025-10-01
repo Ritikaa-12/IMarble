@@ -2,7 +2,8 @@ package com.marble.controllers;
 
 import com.marble.dto.ProductDto;
 import com.marble.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,37 +12,35 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
-    // Create
-    @PostMapping("/create")
-    public ProductDto createProduct(@RequestBody ProductDto productDto) {
-        return productService.createProduct(productDto);
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
-    // Read by ID
-    @GetMapping("/getById/{id}")
-    public ProductDto getProductById(@PathVariable Integer id) {
-        return productService.getProductById(id);
+    @PostMapping
+    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto dto) {
+        return new ResponseEntity<>(productService.createProduct(dto), HttpStatus.CREATED);
     }
 
-    // Read all
-    @GetMapping("/getAll")
-    public List<ProductDto> getAllProducts() {
-        return productService.getAllProducts();
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDto> getProductById(@PathVariable Integer id) {
+        return ResponseEntity.ok(productService.getProductById(id));
     }
 
-    // Update
-    @PutMapping("/update/{id}")
-    public ProductDto updateProduct(@PathVariable Integer id, @RequestBody ProductDto productDto) {
-        return productService.updateProduct(id, productDto);
+    @GetMapping
+    public ResponseEntity<List<ProductDto>> getAllProducts() {
+        return ResponseEntity.ok(productService.getAllProducts());
     }
 
-    // Delete
-    @DeleteMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable Integer id) {
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductDto> updateProduct(@PathVariable Integer id, @RequestBody ProductDto dto) {
+        return ResponseEntity.ok(productService.updateProduct(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteProduct(@PathVariable Integer id) {
         productService.deleteProduct(id);
-        return "Product with ID " + id + " deleted successfully.";
+        return ResponseEntity.ok("Product deleted successfully");
     }
 }

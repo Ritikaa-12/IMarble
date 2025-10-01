@@ -4,9 +4,11 @@ import com.marble.dto.ProductDto;
 import com.marble.entities.Product;
 import com.marble.entities.SubCategory;
 import com.marble.entities.Brand;
+import com.marble.entities.Category;
 import com.marble.repos.ProductRepository;
 import com.marble.repos.SubCategoryRepository;
 import com.marble.repos.BrandRepository;
+import com.marble.repos.CategoryRepository;
 import com.marble.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,9 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private BrandRepository brandRepository;
 
-    // Convert Entity -> DTO
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     private ProductDto mapToDto(Product product) {
         ProductDto dto = new ProductDto();
         dto.setProductId(product.getProductId());
@@ -48,10 +52,14 @@ public class ProductServiceImpl implements ProductService {
             dto.setBrandTitle(product.getBrand().getTitle());
         }
 
+        if (product.getCategory() != null) {
+            dto.setCategoryId(product.getCategory().getCategoryId());
+            dto.setTitle(product.getCategory().getTitle());
+        }
+
         return dto;
     }
 
-    // Convert DTO -> Entity
     private Product mapToEntity(ProductDto dto) {
         Product product = new Product();
         product.setProductId(dto.getProductId());
@@ -63,19 +71,24 @@ public class ProductServiceImpl implements ProductService {
         product.setImage(dto.getImage());
         product.setMinStockLevel(dto.getMinStockLevel());
 
-        // Ensure SubCategory exists
-        if (dto.getSubCategoryId() == null) {
-            throw new RuntimeException("SubCategoryId is required.");
+        // 🔹 Set SubCategory
+        if (dto.getSubCategoryId() != null) {
+            subCategoryRepository.findById(dto.getSubCategoryId())
+                    .ifPresent(product::setSubCategory);
         }
-        SubCategory subCategory = subCategoryRepository.findById(dto.getSubCategoryId())
-                .orElseThrow(() -> new RuntimeException("SubCategory not found with ID: " + dto.getSubCategoryId()));
-        product.setSubCategory(subCategory);
 
-        // Set Brand if present
+        // 🔹 Set Brand
         if (dto.getBrandId() != null) {
-            Brand brand = brandRepository.findById(dto.getBrandId())
-                    .orElseThrow(() -> new RuntimeException("Brand not found with ID: " + dto.getBrandId()));
-            product.setBrand(brand);
+            brandRepository.findById(dto.getBrandId())
+                    .ifPresent(product::setBrand);
+        }
+
+        // 🔹 Set Category (mandatory!)
+        if (dto.getCategoryId() != null) {
+            categoryRepository.findById(dto.getCategoryId())
+                    .ifPresent(product::setCategory);
+        } else {
+            throw new RuntimeException("Category is required");
         }
 
         return product;
@@ -97,10 +110,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> getAllProducts() {
-        return productRepository.findAll()
-                .stream()
-                .map(this::mapToDto)
-                .collect(Collectors.toList());
+        return productRepository.findAll().stream().map(this::mapToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -116,19 +126,21 @@ public class ProductServiceImpl implements ProductService {
         product.setImage(productDto.getImage());
         product.setMinStockLevel(productDto.getMinStockLevel());
 
-        // Ensure SubCategory exists
-        if (productDto.getSubCategoryId() == null) {
-            throw new RuntimeException("SubCategoryId is required.");
+        if (productDto.getSubCategoryId() != null) {
+            subCategoryRepository.findById(productDto.getSubCategoryId())
+                    .ifPresent(product::setSubCategory);
         }
-        SubCategory subCategory = subCategoryRepository.findById(productDto.getSubCategoryId())
-                .orElseThrow(() -> new RuntimeException("SubCategory not found with ID: " + productDto.getSubCategoryId()));
-        product.setSubCategory(subCategory);
 
-        // Set Brand if present
         if (productDto.getBrandId() != null) {
-            Brand brand = brandRepository.findById(productDto.getBrandId())
-                    .orElseThrow(() -> new RuntimeException("Brand not found with ID: " + productDto.getBrandId()));
-            product.setBrand(brand);
+            brandRepository.findById(productDto.getBrandId())
+                    .ifPresent(product::setBrand);
+        }
+
+        if (productDto.getCategoryId() != null) {
+            categoryRepository.findById(productDto.getCategoryId())
+                    .ifPresent(product::setCategory);
+        } else {
+            throw new RuntimeException("Category is required");
         }
 
         Product updated = productRepository.save(product);
