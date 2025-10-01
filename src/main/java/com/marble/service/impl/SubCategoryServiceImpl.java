@@ -4,7 +4,7 @@ package com.marble.service.impl;
 import com.marble.dto.SubCategoryDto;
 import com.marble.entities.Category;
 import com.marble.entities.SubCategory;
-import com.marble.repos.CategoryRepsitory;
+import com.marble.repos.CategoryRepository;
 import com.marble.repos.SubCategoryRepository;
 import com.marble.service.SubCategoryService;
 import org.springframework.stereotype.Service;
@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 public class SubCategoryServiceImpl implements SubCategoryService {
 
     private final SubCategoryRepository subCategoryRepository;
-    private final CategoryRepsitory categoryRepository;
+    private final CategoryRepository categoryRepository;
 
-    public SubCategoryServiceImpl(SubCategoryRepository subCategoryRepository, CategoryRepsitory categoryRepository) {
+    public SubCategoryServiceImpl(SubCategoryRepository subCategoryRepository, CategoryRepository categoryRepository) {
         this.subCategoryRepository = subCategoryRepository;
         this.categoryRepository = categoryRepository;
     }

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.marble.entities.Category;
 
 @Repository
-public interface CategoryRepsitory extends JpaRepository<Category, Integer> {
+public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
 }
