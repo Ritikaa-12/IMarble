@@ -16,11 +16,6 @@ public class OrderrController {
 
     @Autowired
     private OrderrService orderrService;
-
-    @GetMapping("/test")
-    public ResponseEntity<String> testController() {
-        return ResponseEntity.ok("OrderrController is working!");
-    }
     
     @PostMapping("/create")
     public ResponseEntity<OrderrDto> createOrder(@RequestBody OrderrDto orderrDto) {
