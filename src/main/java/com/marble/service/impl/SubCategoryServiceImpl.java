@@ -19,7 +19,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 
     public SubCategoryServiceImpl(SubCategoryRepository subCategoryRepository, CategoryRepository categoryRepository) {
         this.subCategoryRepository = subCategoryRepository;
-        this.categoryRepository = categoryRepository;
+       this.categoryRepository = categoryRepository;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
         SubCategory savedSubCategory = subCategoryRepository.save(subCategory);
         return this.entityToDto(savedSubCategory);
     }
-
+             
     @Override
     public SubCategoryDto getSubCategoryById(Integer subCategoryId) {
         SubCategory subCategory = subCategoryRepository.findById(subCategoryId)

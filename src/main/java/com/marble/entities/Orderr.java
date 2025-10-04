@@ -27,15 +27,14 @@ public class Orderr {
 	@Column(name="order_id")
 	private Integer orderId;
 	
-	  	//many orders belong to one client....
-	@ManyToOne
-	@JoinColumn(name = "client_id", nullable = false)
-	private Client client;
-	  
-	//many orders belong to one shop...
-	@ManyToOne
-	@JoinColumn(name = "shop_id", nullable = false)
-	private Shop shop;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id", nullable = false)
+    private Client client;
+
+    @ManyToOne
+    @JoinColumn(name = "shop_id", nullable = false)
+    private Shop shop;
 	
 	@Column(nullable = false)
 	private Integer orderNo;
