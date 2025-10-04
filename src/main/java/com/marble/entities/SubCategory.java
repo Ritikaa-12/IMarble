@@ -11,9 +11,10 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 public class SubCategory {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer subCategoryId;
+	 @Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY) // only ONE auto_increment
+	    @Column(name = "subcategory_id")
+	    private Integer subCategoryId;
 
     @Column(nullable = false)
     private String title;
@@ -25,7 +26,7 @@ public class SubCategory {
     private Boolean status = true;
 
     // Many SubCategories belong to One Category
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "category_id",nullable = false)
     private Category category;
 

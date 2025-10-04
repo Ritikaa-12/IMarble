@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class Staff_Salary {
+public class StaffSalary {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

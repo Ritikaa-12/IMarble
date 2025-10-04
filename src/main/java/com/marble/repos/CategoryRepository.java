@@ -1,9 +1,11 @@
 package com.marble.repos;
 
-import com.marble.entities.Brand;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.marble.entities.Category;
+
 @Repository
-public interface BrandRepository extends JpaRepository<Brand, Integer> {
+public interface CategoryRepository extends JpaRepository<Category, Integer> {
+
 }

@@ -14,7 +14,7 @@ public class ProductDto {
     private String modelNo;
     private String image;
     private Integer minStockLevel;
-
+    private Integer categoryId; 
     // We'll use these IDs to create the product
     private Integer subCategoryId;
     private Integer brandId;

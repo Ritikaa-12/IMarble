@@ -1,11 +1,10 @@
 package com.marble.repos;
 
+import com.marble.entities.OrderItem;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.marble.entities.Category;
-
 @Repository
-public interface CategoryRepsitory extends JpaRepository<Category, Integer> {
-
+public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
 }

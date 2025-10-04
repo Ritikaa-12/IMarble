@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 
 import com.marble.dto.CategoryDto;
 import com.marble.entities.Category;
-import com.marble.repos.CategoryRepsitory;
+import com.marble.repos.CategoryRepository;
 import com.marble.service.CategoryService;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-	private final CategoryRepsitory categoryRepository;
+	private final CategoryRepository categoryRepository;
 
 	// helper method hai entitiy ko dto me karne ke liye
 	private CategoryDto entityToDto(Category category) {
@@ -47,7 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
 		return category;
 	}
 
-	public CategoryServiceImpl(CategoryRepsitory categoryRepsitory) {
+	public CategoryServiceImpl(CategoryRepository categoryRepsitory) {
 		this.categoryRepository = categoryRepsitory;
 	}
 
