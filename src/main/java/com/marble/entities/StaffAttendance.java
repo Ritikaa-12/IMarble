@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,20 +18,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class Staff_Advance {
+public class StaffAttendance {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="advance_id")
-	private Integer advanceId;
+	@Column(name="attendance_id")
+	private Integer attendanceId;
 	
-	// Many advance payments can belong to one Staff member
-    @ManyToOne
-    @JoinColumn(name = "staff_id", nullable = false) 
+	// one staff person   - One Attendance //  ASk++++++++++++++++++++Chatg 
+    @OneToOne
+    @JoinColumn(name="staff_id",nullable=false)
     private Staff staff;
-    
-	private Float amount;
+	
+	@Column(name="date", nullable =false)
 	private LocalDate date;
-	private Boolean remarks; // advance payment done or not
-	private String paymentMode;
+	
+	@Column(name="status", nullable =false)//(Absent/Half-Day)
+	private String status;
+	
 }

@@ -1,7 +1,5 @@
 package com.marble.entities;
 
-import java.time.LocalDate;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,22 +15,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class Staff_Attendance {
+public class SellsProduct {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="attendance_id")
-	private Integer attendanceId;
+	@Column(name="sells_prod_id")
+	private Integer sellsProductId;
 	
-	// one staff person   - One Attendance //  ASk++++++++++++++++++++Chatg 
-    @OneToOne
-    @JoinColumn(name="staff_id",nullable=false)
-    private Staff staff;
+	//bht sare sells product ki single entry ho sakti hai
+	@ManyToOne
+	@JoinColumn(name = "sells_entry_id", nullable = false)
+	private SellsEntry sellsEntry;
+
+	//bht sare sells product ek single product id ko belong kr sakte hai
+    @ManyToOne
+	@JoinColumn(name = "product_id", nullable = false)
+	private Product product;
 	
-	@Column(name="date", nullable =false)
-	private LocalDate date;
+	private Integer quantity;
 	
-	@Column(name="status", nullable =false)//(Absent/Half-Day)
-	private String status;
-	
+	private Float amount;
 }

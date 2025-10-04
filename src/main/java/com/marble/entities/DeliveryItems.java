@@ -27,7 +27,7 @@ public class DeliveryItems {
 	
     @ManyToOne
     @JoinColumn(name = "sells_prod_id", nullable = false)
-    private Sells_product sells_product;
+    private SellsProduct sells_product;
     
     private Integer quantity;
 	
