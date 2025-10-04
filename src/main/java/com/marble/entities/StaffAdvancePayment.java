@@ -1,5 +1,7 @@
 package com.marble.entities;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,24 +17,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class Sells_product {
+public class StaffAdvancePayment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="sells_prod_id")
-	private Integer sellsProductId;
+	@Column(name="advance_id")
+	private Integer advanceId;
 	
-	//bht sare sells product ki single entry ho sakti hai
-	@ManyToOne
-	@JoinColumn(name = "sells_entry_id", nullable = false)
-	private Sells_Entry sellsEntry;
-
-	//bht sare sells product ek single product id ko belong kr sakte hai
+	// Many advance payments can belong to one Staff member
     @ManyToOne
-	@JoinColumn(name = "product_id", nullable = false)
-	private Product product;
-	
-	private Integer quantity;
-	
+    @JoinColumn(name = "staff_id", nullable = false) 
+    private Staff staff;
+    
 	private Float amount;
+	private LocalDate date;
+	private Boolean remarks; // advance payment done or not
+	private String paymentMode;
 }
