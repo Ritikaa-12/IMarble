@@ -12,4 +12,6 @@ public interface StaffService {
 	StaffDto getStaffProfileByUserId(Integer userId);
 
 	List<StaffDto> getAllStaff();
+	
+	void deleteStaff(Integer staffId);
 }

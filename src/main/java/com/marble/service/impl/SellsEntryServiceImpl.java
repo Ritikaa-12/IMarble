@@ -71,27 +71,27 @@ public class SellsEntryServiceImpl implements SellsEntryService {
 
     @Override
     public SellsEntryDto getSellsEntryById(Integer sellsEntryId) {
-        // 1. Find the SellsEntry by its ID from the database.
+        
         SellsEntry sellsEntry = sellsEntryRepository.findById(sellsEntryId)
                 .orElseThrow(() -> new RuntimeException("Sells Entry not found with id: " + sellsEntryId));
         
-        // 2. Convert the found entity to a DTO and return it.
+        
         return entityToDto(sellsEntry);
     }
 
     @Override
     public SellsEntryDto updateSellsEntryStatus(Integer sellsEntryId, SellsStatus status) {
-        // 1. Find the SellsEntry to update.
+        
         SellsEntry sellsEntry = sellsEntryRepository.findById(sellsEntryId)
                 .orElseThrow(() -> new RuntimeException("Sells Entry not found with id: " + sellsEntryId));
 
-        // 2. Set the new status.
+        
         sellsEntry.setStatus(status);
 
-        // 3. Save the changes back to the database.
+        
         SellsEntry updatedSellsEntry = sellsEntryRepository.save(sellsEntry);
 
-        // 4. Convert the updated entity to a DTO and return it.
+        
         return entityToDto(updatedSellsEntry);
     }
 
@@ -133,4 +133,35 @@ public class SellsEntryServiceImpl implements SellsEntryService {
         
         return dto;
     }
+
+    @Override
+    public List<SellsEntryDto> getAllSellsEntries() {
+        List<SellsEntry> allEntries = sellsEntryRepository.findAll();
+        return allEntries.stream()
+                .map(this::entityToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SellsEntryDto> getSellsEntriesByClient(Integer clientId) {
+        List<SellsEntry> clientEntries = sellsEntryRepository.findByClientClientId(clientId);
+        return clientEntries.stream()
+                .map(this::entityToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public SellsEntryDto getSellsEntryByInvoiceNo(String invoiceNo) {
+        SellsEntry sellsEntry = sellsEntryRepository.findByInvoiceNo(invoiceNo)
+                .orElseThrow(() -> new RuntimeException("Sells Entry not found with invoice number: " + invoiceNo));
+        return entityToDto(sellsEntry);
+    }
+
+	@Override
+	public void removeSellsEntry(Integer sellsEntryId) {
+		 SellsEntry sellsEntry = sellsEntryRepository.findById(sellsEntryId)
+	                .orElseThrow(() -> new RuntimeException("sellsEntry not found with ID: " + sellsEntryId));
+		 sellsEntryRepository.delete(sellsEntry);
+		
+	}
 }

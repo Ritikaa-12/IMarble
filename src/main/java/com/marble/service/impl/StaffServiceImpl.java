@@ -1,6 +1,7 @@
 package com.marble.service.impl;
 
 import com.marble.dto.StaffDto;
+import com.marble.entities.Client;
 import com.marble.entities.Shop;
 import com.marble.entities.Staff;
 import com.marble.entities.Users;
@@ -101,4 +102,11 @@ public class StaffServiceImpl implements StaffService {
 
         return dto;
     }
+
+	@Override
+	public void deleteStaff(Integer staffId) {
+		Staff staff=staffRepository.findById(staffId).orElseThrow(() -> new RuntimeException("Staff not found with ID"+ staffId));
+    	staffRepository.delete(staff);
+		
+	}
 }
