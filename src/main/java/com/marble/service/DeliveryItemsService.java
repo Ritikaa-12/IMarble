@@ -10,4 +10,9 @@ public interface DeliveryItemsService {
 	List<DeliveryItemsDto> getItemsForDelivery(Integer deliveryId);
 
 	void removeItemFromDelivery(Integer deliverItemId);
+	
+	DeliveryItemsDto updateItemInDelivery(Integer deliverItemId, DeliveryItemsDto itemDto);
+	
+	List<DeliveryItemsDto> getAllDeliveryItems();
+
 }

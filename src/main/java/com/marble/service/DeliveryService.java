@@ -19,4 +19,6 @@ public interface DeliveryService {
 
 
     DeliveryDto getDeliveryById(Integer deliveryId);
+    
+    void deleteDeliveryId(Integer deliveryId);
 }

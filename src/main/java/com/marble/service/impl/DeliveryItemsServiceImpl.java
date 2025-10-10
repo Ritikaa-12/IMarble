@@ -77,4 +77,25 @@ public class DeliveryItemsServiceImpl implements DeliveryItemsService {
         
         return dto;
     }
+
+    @Override
+    public DeliveryItemsDto updateItemInDelivery(Integer deliverItemId, DeliveryItemsDto itemDto) {
+        DeliveryItems itemToUpdate = deliveryItemsRepository.findById(deliverItemId)
+                .orElseThrow(() -> new RuntimeException("Delivery item not found with id: " + deliverItemId));
+
+        itemToUpdate.setQuantity(itemDto.getQuantity());
+
+        DeliveryItems savedItem = deliveryItemsRepository.save(itemToUpdate);
+
+        return entityToDto(savedItem);
+    }
+
+    @Override
+    public List<DeliveryItemsDto> getAllDeliveryItems() {
+        List<DeliveryItems> allItems = deliveryItemsRepository.findAll();
+
+        return allItems.stream()
+                .map(this::entityToDto)
+                .collect(Collectors.toList());
+    }
 }
