@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface SellsEntryRepository extends JpaRepository<SellsEntry, Integer> {
     
-    List<SellsEntry> findByClientId(Integer clientId);
+    List<SellsEntry> findByClientClientId(Integer clientId);
     Optional<SellsEntry> findByInvoiceNo(String invoiceNo);
 }

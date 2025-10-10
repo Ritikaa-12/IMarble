@@ -1,6 +1,7 @@
 package com.marble.service.impl;
 
 import com.marble.dto.DeliveryDto;
+import com.marble.entities.Client;
 import com.marble.entities.Delivery;
 import com.marble.entities.Orderr;
 import com.marble.entities.Staff;
@@ -93,4 +94,11 @@ public class DeliveryServiceImpl implements DeliveryService {
         }
         return dto;
     }
+
+	@Override
+	public void deleteDeliveryId(Integer deliveryId) {
+		Delivery delivery=deliveryRepository.findById(deliveryId).orElseThrow(() -> new RuntimeException("Delivery not found with ID"+ deliveryId));
+    	deliveryRepository.delete(delivery);
+		
+	}
 }
