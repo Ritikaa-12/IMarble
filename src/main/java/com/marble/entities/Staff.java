@@ -23,7 +23,7 @@ public class Staff {
 	@Column(name="joining_date")
 	private LocalDate joiningDate;
 	
-	@Column(name="leaving_date")
+	@Column(name="leaving_date",nullable=true)
 	private LocalDate leavingDate;
 	
 	@Column(name="salary_type") // Daily/Monthly
