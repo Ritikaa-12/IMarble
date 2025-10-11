@@ -16,7 +16,6 @@ public class DeliveryController {
         this.deliveryService = deliveryService;
     }
 
-    
     @PostMapping("/")
     public ResponseEntity<DeliveryDto> createDelivery(@RequestBody DeliveryDto deliveryDto) {
         DeliveryDto createdDelivery = deliveryService.createDelivery(deliveryDto);

@@ -1,5 +1,7 @@
 package com.marble.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,8 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 
-
-public class Purchase_Product {
+public class PurchaseProduct {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="purchase_product_id")
