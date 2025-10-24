@@ -1,7 +1,6 @@
 package com.marble.service.impl;
 
 import com.marble.dto.StaffDto;
-import com.marble.entities.Client;
 import com.marble.entities.Shop;
 import com.marble.entities.Staff;
 import com.marble.entities.Users;
