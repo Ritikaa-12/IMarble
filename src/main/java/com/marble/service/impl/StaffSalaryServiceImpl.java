@@ -22,16 +22,14 @@ public class StaffSalaryServiceImpl implements StaffSalaryService {
     @Autowired
     private StaffRepository staffRepository; 
 
-    // ------------------ DTO to Entity ------------------
+    // ------------------ DTO → Entity ------------------
     private StaffSalary convertToEntity(StaffSalaryDto dto) {
         StaffSalary entity = new StaffSalary();
-
         entity.setSalaryId(dto.getSalaryId());
 
-        // ✅ Fetch the Staff object using ID from DTO
-        if (dto.getStaff() != null) {
-            Staff staff = staffRepository.findById(dto.getStaff())
-                    .orElseThrow(() -> new RuntimeException("Staff not found with ID: " + dto.getStaff()));
+        if (dto.getStaffId() != null) {
+            Staff staff = staffRepository.findById(dto.getStaffId())
+                    .orElseThrow(() -> new RuntimeException("Staff not found with ID: " + dto.getStaffId()));
             entity.setStaff(staff);
         }
 
@@ -45,21 +43,23 @@ public class StaffSalaryServiceImpl implements StaffSalaryService {
         return entity;
     }
 
-    // ------------------ Entity to DTO ------------------
+    // ------------------ Entity → DTO ------------------
     private StaffSalaryDto convertToDto(StaffSalary entity) {
         StaffSalaryDto dto = new StaffSalaryDto();
+
         dto.setSalaryId(entity.getSalaryId());
-        dto.setStaff(entity.getStaff() != null ? entity.getStaff().getStaffId() : null); // ✅ Extract staffId
+        dto.setStaffId(entity.getStaff() != null ? entity.getStaff().getStaffId() : null);
         dto.setMonth(entity.getMonth());
         dto.setYear(entity.getYear());
         dto.setAmount(entity.getAmount());
         dto.setPaymentDate(entity.getPaymentDate());
         dto.setPaymentMode(entity.getPaymentMode());
         dto.setDescription(entity.getDescription());
+
         return dto;
     }
 
-    // ------------------ CRUD Operations ------------------
+    // ------------------ CRUD Methods ------------------
 
     @Override
     public StaffSalaryDto addSalary(StaffSalaryDto dto) {
@@ -73,9 +73,9 @@ public class StaffSalaryServiceImpl implements StaffSalaryService {
         StaffSalary existing = salaryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Salary not found with ID: " + id));
 
-        if (dto.getStaff() != null) {
-            Staff staff = staffRepository.findById(dto.getStaff())
-                    .orElseThrow(() -> new RuntimeException("Staff not found with ID: " + dto.getStaff()));
+        if (dto.getStaffId() != null) {
+            Staff staff = staffRepository.findById(dto.getStaffId())
+                    .orElseThrow(() -> new RuntimeException("Staff not found with ID: " + dto.getStaffId()));
             existing.setStaff(staff);
         }
 
@@ -86,24 +86,29 @@ public class StaffSalaryServiceImpl implements StaffSalaryService {
         existing.setPaymentMode(dto.getPaymentMode());
         existing.setDescription(dto.getDescription());
 
-        return convertToDto(salaryRepository.save(existing));
+        StaffSalary updated = salaryRepository.save(existing);
+        return convertToDto(updated);
     }
 
     @Override
     public void deleteSalary(Integer id) {
+        if (!salaryRepository.existsById(id)) {
+            throw new RuntimeException("Salary not found with ID: " + id);
+        }
         salaryRepository.deleteById(id);
     }
 
     @Override
     public StaffSalaryDto getSalaryById(Integer id) {
-        return salaryRepository.findById(id)
-                .map(this::convertToDto)
+        StaffSalary salary = salaryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Salary not found with ID: " + id));
+        return convertToDto(salary);
     }
 
     @Override
     public List<StaffSalaryDto> getAllSalaries() {
-        return salaryRepository.findAll().stream()
+        return salaryRepository.findAll()
+                .stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }

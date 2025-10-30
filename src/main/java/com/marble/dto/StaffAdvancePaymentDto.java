@@ -8,7 +8,7 @@ import lombok.Data;
 public class StaffAdvancePaymentDto {
 private Integer advanceId;
 	
-    private Integer staff;  
+    private Integer staffId;  
 	private Float amount;
 	private LocalDate date;
 	private Boolean remarks; // advance payment done or not
