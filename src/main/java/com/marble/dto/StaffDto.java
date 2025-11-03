@@ -18,7 +18,7 @@ public class StaffDto {
     private String address;
     private LocalDate joiningDate;
     private LocalDate leavingDate;
-    private String salaryType;
+    private String salaryType; 
     private Double baseSalary;
     private Integer shopId;
 }
