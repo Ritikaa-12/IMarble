@@ -1,7 +1,6 @@
 package com.marble.service.impl;
 
 import com.marble.dto.StaffDto;
-import com.marble.entities.Client;
 import com.marble.entities.Shop;
 import com.marble.entities.Staff;
 import com.marble.entities.Users;
@@ -28,11 +27,17 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public StaffDto createStaffProfile(StaffDto staffDto) {
-        
+
+        if (staffDto.getUserId() == null) {
+            throw new RuntimeException("User ID must not be null");
+        }
+        if (staffDto.getShopId() == null) {
+            throw new RuntimeException("Shop ID must not be null");
+        }
+
         Users user = usersRepository.findById(staffDto.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        
-        
+
         Shop shop = shopRepository.findById(staffDto.getShopId())
                 .orElseThrow(() -> new RuntimeException("Shop not found"));
 
@@ -44,9 +49,17 @@ public class StaffServiceImpl implements StaffService {
         staff.setSalaryType(staffDto.getSalaryType());
         staff.setBaseSalary(staffDto.getBaseSalary());
 
+        // ✅ handle nullable leaving date safely
+        if (staffDto.getLeavingDate() != null) {
+            staff.setLeavingDate(staffDto.getLeavingDate());
+        } else {
+            staff.setLeavingDate(null); // will trigger @PrePersist to set 2050-12-31
+        }
+
         Staff savedStaff = staffRepository.save(staff);
         return entityToDto(savedStaff);
     }
+
 
     @Override
     public StaffDto updateStaffProfile(Integer staffId, StaffDto staffDto) {
