@@ -81,6 +81,16 @@ public class StockTransactionServiceImpl implements StockTransactionService {
         return transactions.stream().map(this::entityToDto).collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional
+    public void deleteTransactionsByStockId(Integer stockId) {
+        List<StockTransaction> transactions = transactionRepository.findByStockStockId(stockId);
+        if (transactions.isEmpty()) {
+            throw new RuntimeException("No transactions found for stock ID: " + stockId);
+        }
+        transactionRepository.deleteAll(transactions);
+    }
+
     // Helper to convert Entity to DTO
     private StockTransactionDto entityToDto(StockTransaction transaction) {
         StockTransactionDto dto = new StockTransactionDto();

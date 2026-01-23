@@ -8,4 +8,6 @@ public interface StockTransactionRepository extends JpaRepository<StockTransacti
 
     // Finds all transactions for a specific product
     List<StockTransaction> findByProductProductId(Integer productId);
+    List<StockTransaction> findByStockStockId(Integer stockId);
+
 }

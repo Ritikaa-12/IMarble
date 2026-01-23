@@ -15,4 +15,7 @@ public interface StockTransactionService {
      * Gets all transactions for a specific product.
      */
     List<StockTransactionDto> getTransactionsForProduct(Integer productId);
+    
+    void deleteTransactionsByStockId(Integer stockId);
+
 }

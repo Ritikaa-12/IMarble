@@ -10,6 +10,8 @@ public interface NotificationService {
 
     
     List<NotificationDto> getNotificationsForUser(Integer userId);
+    
+    NotificationDto updateNotification(Integer notificationId, NotificationDto notificationDto);
 
    
     void deleteNotification(Integer notificationId);

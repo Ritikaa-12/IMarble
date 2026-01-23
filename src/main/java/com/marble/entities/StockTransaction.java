@@ -12,6 +12,7 @@ public class StockTransaction {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "stock_trans_id")
 	private Integer stockTransId;
 	
 	@ManyToOne
@@ -33,4 +34,9 @@ public class StockTransaction {
 	private Integer referenceId; 
 
     private LocalDate transactionDate;
+    
+    @ManyToOne
+    @JoinColumn(name = "stock_id")
+    private Stock stock;
+
 }

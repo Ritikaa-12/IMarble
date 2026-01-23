@@ -33,6 +33,21 @@ public class NotificationServiceImpl implements NotificationService {
                 .collect(Collectors.toList());
     }
 
+    
+    @Override
+    public NotificationDto updateNotification(Integer notificationId, NotificationDto notificationDto) {
+        Notification notification = notificationRepository.findById(notificationId)
+                .orElseThrow(() -> new RuntimeException("Notification not found with ID: " + notificationId));
+
+        // Update fields - example:
+        notification.setType(notificationDto.getType());
+        notification.setMessage(notificationDto.getMessage());
+        notification.setTarget(notificationDto.getTarget());
+
+        Notification updatedNotification = notificationRepository.save(notification);
+        return entityToDto(updatedNotification);
+    }
+
     @Override
     public void deleteNotification(Integer notificationId) {
         Notification notification = notificationRepository.findById(notificationId)
