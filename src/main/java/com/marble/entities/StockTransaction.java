@@ -1,45 +1,42 @@
 package com.marble.entities;
 
+import com.marble.enums.StockTransactionStatus;
+import com.marble.enums.StockTransactionType;
+import jakarta.persistence.*;
+import lombok.Data;
 import java.time.LocalDate;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Entity
-// Stock Tracker
 public class StockTransaction {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="stock_transaction_id")
+	@Column(name = "stock_trans_id")
 	private Integer stockTransId;
 	
-	//-------------------------------
-	// sir  ++++++++++++++++++++++++++++++++++++++++
 	@ManyToOne
-	@JoinColumn(name="product_id",nullable=false)
+	@JoinColumn(name="product_id", nullable=false)
 	private Product product;
 	
-	@Column( nullable =false)
-	private String type;              //           (purchase/sells/missing)
+    @Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private StockTransactionType type;
 	
-	@Column( nullable =false)
+	@Column(nullable = false)
 	private Integer quantity;
 	
-	@Column( nullable =false)
-	private String status;
+    @Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private StockTransactionStatus status;
 	
-	private Integer referenceId; // sir+++++++++++++++
-	
-	}
+    // ID of the SellsEntry, PurchaseEntry, or ReturnRequest
+	private Integer referenceId; 
+
+    private LocalDate transactionDate;
+    
+    @ManyToOne
+    @JoinColumn(name = "stock_id")
+    private Stock stock;
+
+}
