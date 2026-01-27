@@ -28,13 +28,19 @@ public class ReturnRequestServiceImpl implements ReturnRequestService {
 
     @Override
     public ReturnRequestDto createReturnRequest(ReturnRequestDto returnRequestDto) {
+        if (returnRequestDto.getOrderId() == null) {
+            throw new IllegalArgumentException("Order ID must not be null");
+        }
+        if (returnRequestDto.getOrderItemId() == null) {
+            throw new IllegalArgumentException("Order Item ID must not be null");
+        }
+
         Orderr order = orderrRepository.findById(returnRequestDto.getOrderId())
                 .orElseThrow(() -> new RuntimeException("Order not found"));
-        
+
         OrderItem orderItem = orderItemRepository.findById(returnRequestDto.getOrderItemId())
                 .orElseThrow(() -> new RuntimeException("Order item not found"));
 
-        // Business Logic: Check if quantity is valid
         if (returnRequestDto.getQuantity() > orderItem.getQuantity()) {
             throw new RuntimeException("Cannot return more items than were purchased in that line item.");
         }
@@ -45,11 +51,12 @@ public class ReturnRequestServiceImpl implements ReturnRequestService {
         request.setQuantity(returnRequestDto.getQuantity());
         request.setType(returnRequestDto.getType());
         request.setDescription(returnRequestDto.getDescription());
-        request.setStatus(ReturnRequestStatus.PENDING_APPROVAL); // Set initial status
+        request.setStatus(ReturnRequestStatus.PENDING_APPROVAL);
 
         ReturnRequest savedRequest = returnRequestRepository.save(request);
         return entityToDto(savedRequest);
     }
+
 
     @Override
     public ReturnRequestDto approveReturnRequest(Integer returnId) {

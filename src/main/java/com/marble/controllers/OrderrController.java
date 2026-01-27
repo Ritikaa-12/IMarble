@@ -3,6 +3,7 @@ package com.marble.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.marble.dto.OrderrDto;
@@ -17,26 +18,31 @@ public class OrderrController {
     @Autowired
     private OrderrService orderrService;
     
+    @PreAuthorize("hasAnyRole('ADMIN','RECEPTIONIST')")
     @PostMapping("/create")
     public ResponseEntity<OrderrDto> createOrder(@RequestBody OrderrDto orderrDto) {
         return new ResponseEntity<>(orderrService.createOrder(orderrDto), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','RECEPTIONIST')")
     @GetMapping("/get/{id}")
     public ResponseEntity<OrderrDto> getOrderById(@PathVariable Integer id) {
         return ResponseEntity.ok(orderrService.getOrderById(id));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','RECEPTIONIST')")
     @GetMapping("/all")
     public ResponseEntity<List<OrderrDto>> getAllOrders() {
         return ResponseEntity.ok(orderrService.getAllOrders());
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','RECEPTIONIST')")
     @PutMapping("/update/{id}")
     public ResponseEntity<OrderrDto> updateOrder(@PathVariable Integer id, @RequestBody OrderrDto orderrDto) {
         return ResponseEntity.ok(orderrService.updateOrder(id, orderrDto));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping("/del/{id}")
     public ResponseEntity<String> deleteOrder(@PathVariable Integer id) {
         orderrService.deleteOrder(id);

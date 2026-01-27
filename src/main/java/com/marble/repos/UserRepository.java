@@ -10,4 +10,7 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
     // Spring Data JPA automatically creates the query for this method
     // It's crucial for the login process.
     Optional<Users> findByEmail(String email);
+
+    Optional<Users> findByMobile(String mobile);
+    boolean existsByMobile(String mobile);
 }
