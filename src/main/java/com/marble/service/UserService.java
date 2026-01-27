@@ -10,4 +10,5 @@ public interface UserService {
     List<UserDto> getAllUsers();
     UserDto updateUser(Integer userId, UserDto userDto);
     void deleteUser(Integer userId);
+    boolean authenticate(String mobile, String rawPassword);
 }

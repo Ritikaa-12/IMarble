@@ -3,6 +3,7 @@ package com.marble.controllers;
 import com.marble.dto.StockDto;
 import com.marble.service.StockService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,14 +18,14 @@ public class StockController {
         this.stockService = stockService;
     }
 
-    // ---------------------- ADD STOCK ----------------------
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @PostMapping("/add")
     public ResponseEntity<StockDto> addStock(@RequestBody StockDto stockDto) {
         StockDto createdStock = stockService.addStock(stockDto);
         return ResponseEntity.ok(createdStock);
     }
 
-    // ---------------------- UPDATE STOCK ----------------------
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','DISPATCHER')")
     @PutMapping("/update/{stockId}")
     public ResponseEntity<StockDto> updateStock(
             @PathVariable Integer stockId,
@@ -34,7 +35,7 @@ public class StockController {
         return ResponseEntity.ok(updatedStock);
     }
 
-    // ---------------------- GET STOCK BY PRODUCT + SHOP ----------------------
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','RECEPTIONIST')")
     @GetMapping("/product/{productId}/shop/{shopId}")
     public ResponseEntity<StockDto> getStockByProductAndShop(
             @PathVariable Integer productId,
@@ -44,14 +45,14 @@ public class StockController {
         return ResponseEntity.ok(stock);
     }
 
-    // ---------------------- GET ALL STOCK FOR A SHOP ----------------------
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','RECEPTIONIST')")
     @GetMapping("/shop/{shopId}")
     public ResponseEntity<List<StockDto>> getAllStockForShop(@PathVariable Integer shopId) {
         List<StockDto> stockList = stockService.getAllStockForShop(shopId);
         return ResponseEntity.ok(stockList);
     }
 
-    // ---------------------- DELETE STOCK ----------------------
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @DeleteMapping("/delete/{stockId}")
     public ResponseEntity<String> deleteStock(@PathVariable Integer stockId) {
         stockService.deleteStock(stockId);
