@@ -110,6 +110,17 @@ public class OrderItemServiceImpl implements OrderitemService {
         OrderItem updated = orderItemRepository.save(existing);
         return mapToDto(updated);
     }
+    
+    @Override
+    public List<OrderItemDto1> getOrderItemsByClientEmail(String email) {
+        List<OrderItem> orderItems = orderItemRepository.findByOrder_Client_Email(email);
+        return orderItems.stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+
+
 
     @Override
     public void deleteOrderItem(Integer orderItemId) {

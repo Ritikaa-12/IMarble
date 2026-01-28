@@ -1,6 +1,9 @@
 package com.marble.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.marble.dto.OrderrDto;
@@ -69,11 +72,31 @@ public class OrderrServiceImpl implements OrderrService {
     }
 
     @Override
-    public OrderrDto getOrderById(Integer orderId) {
-        Orderr orderr = orderrRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found with ID: " + orderId));
-        return mapToDto(orderr);
+    public OrderrDto getOrderById(Integer id) {
+        Orderr order = orderrRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order not found with ID: " + id));
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserEmail = auth.getName(); // Assuming email is the principal name
+
+        boolean isClient = auth.getAuthorities().stream()
+            .anyMatch(r -> r.getAuthority().equals("ROLE_CLIENT"));
+
+        if (isClient) {
+            Client currentClient = clientRepository.findByEmail(currentUserEmail)
+                .orElseThrow(() -> new RuntimeException("Client not found for email: " + currentUserEmail));
+
+            if (!order.getClient().getClientId().equals(currentClient.getClientId())) {
+                throw new AccessDeniedException("Not authorized to access this order");
+            }
+        }
+
+       
+        
+        return mapToDto(order);
     }
+
+
 
     @Override
     public List<OrderrDto> getAllOrders() {

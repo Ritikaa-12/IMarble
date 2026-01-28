@@ -16,6 +16,7 @@ public interface StockTransactionService {
      */
     List<StockTransactionDto> getTransactionsForProduct(Integer productId);
     
+    StockTransactionDto updateTransaction(Integer transactionId, StockTransactionDto transactionDto);
     void deleteTransactionsByStockId(Integer stockId);
 
 }

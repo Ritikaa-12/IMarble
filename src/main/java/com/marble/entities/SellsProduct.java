@@ -22,12 +22,11 @@ public class SellsProduct {
 	@Column(name="sells_prod_id")
 	private Integer sellsProductId;
 	
-	//bht sare sells product ki single entry ho sakti hai
+	
 	@ManyToOne
 	@JoinColumn(name = "sells_entry_id", nullable = false)
 	private SellsEntry sellsEntry;
 
-	//bht sare sells product ek single product id ko belong kr sakte hai
     @ManyToOne
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
