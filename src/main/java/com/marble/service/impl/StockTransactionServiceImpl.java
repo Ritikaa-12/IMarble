@@ -23,86 +23,168 @@ public class StockTransactionServiceImpl implements StockTransactionService {
     private final StockRepository stockRepository;
     private final ProductRepository productRepository;
 
-    public StockTransactionServiceImpl(StockTransactionRepository transactionRepository, StockRepository stockRepository, ProductRepository productRepository) {
+    public StockTransactionServiceImpl(StockTransactionRepository transactionRepository,
+                                       StockRepository stockRepository,
+                                       ProductRepository productRepository) {
         this.transactionRepository = transactionRepository;
         this.stockRepository = stockRepository;
         this.productRepository = productRepository;
     }
 
     @Override
-    @Transactional // This ensures both tables (Stock and StockTransaction) update together
+    @Transactional
     public StockTransactionDto createTransaction(StockTransactionDto transactionDto) {
-        
-        // 1. Find the product
+
         Product product = productRepository.findById(transactionDto.getProductId())
                 .orElseThrow(() -> new RuntimeException("Product not found"));
 
-        // 2. Find the main stock record for this product and shop
-        Stock stock = stockRepository.findByProductIdAndShopId(transactionDto.getProductId(), transactionDto.getShopId())
-                .orElseThrow(() -> new RuntimeException("Stock record not found for this product and shop"));
+        Stock stock = stockRepository.findByProductIdAndShopId(
+                transactionDto.getProductId(),
+                transactionDto.getShopId()
+        ).orElseThrow(() -> new RuntimeException("Stock record not found for this product and shop"));
 
-        // 3. Update the stock quantity based on the transaction type
         int quantity = transactionDto.getQuantity();
+
         switch (transactionDto.getType()) {
             case PURCHASE:
             case RETURN:
                 stock.setQuantityAvailable(stock.getQuantityAvailable() + quantity);
                 break;
+
             case SELLS:
             case DAMAGE:
             case MISSING:
                 if (stock.getQuantityAvailable() < quantity) {
-                    throw new RuntimeException("Not enough stock available. Only " + stock.getQuantityAvailable() + " left.");
+                    throw new RuntimeException("Not enough stock available. Only " +
+                            stock.getQuantityAvailable() + " left.");
                 }
                 stock.setQuantityAvailable(stock.getQuantityAvailable() - quantity);
                 break;
         }
 
-        // 4. Save the updated stock record
         stockRepository.save(stock);
 
-        // 5. Create and save the new transaction log
         StockTransaction transaction = new StockTransaction();
         transaction.setProduct(product);
         transaction.setType(transactionDto.getType());
         transaction.setQuantity(quantity);
-        transaction.setStatus(StockTransactionStatus.COMPLETED); // Assuming it's immediate
+        transaction.setStatus(StockTransactionStatus.COMPLETED);
         transaction.setReferenceId(transactionDto.getReferenceId());
         transaction.setTransactionDate(LocalDate.now());
 
         StockTransaction savedTransaction = transactionRepository.save(transaction);
-        
+
         return entityToDto(savedTransaction);
+    }
+
+    // -------------------- UPDATE METHOD ADDED HERE --------------------
+
+    @Override
+    @Transactional
+    public StockTransactionDto updateTransaction(Integer transactionId, StockTransactionDto dto) {
+
+        // 1. Find old transaction
+        StockTransaction oldTx = transactionRepository.findById(transactionId)
+                .orElseThrow(() -> new RuntimeException("Transaction not found"));
+
+        Product product = oldTx.getProduct();
+
+        // 2. Find stock record
+        Stock stock = stockRepository.findByProductIdAndShopId(
+                dto.getProductId(),
+                dto.getShopId()
+        ).orElseThrow(() -> new RuntimeException("Stock record not found for update"));
+
+        // ---------------- Reverse old effect ----------------
+        reverseOldEffect(stock, oldTx);
+
+        // ---------------- Update transaction fields ----------------
+        oldTx.setType(dto.getType());
+        oldTx.setQuantity(dto.getQuantity());
+        oldTx.setReferenceId(dto.getReferenceId());
+        oldTx.setTransactionDate(dto.getTransactionDate() != null ? dto.getTransactionDate() : LocalDate.now());
+
+        // ---------------- Apply new effect ----------------
+        applyNewEffect(stock, oldTx);
+
+        stockRepository.save(stock);
+        StockTransaction updatedTx = transactionRepository.save(oldTx);
+
+        return entityToDto(updatedTx);
+    }
+
+    // -------------------- REVERSE OLD EFFECT --------------------
+    private void reverseOldEffect(Stock stock, StockTransaction oldTx) {
+        int qty = oldTx.getQuantity();
+
+        switch (oldTx.getType()) {
+            case PURCHASE:
+            case RETURN:
+                stock.setQuantityAvailable(stock.getQuantityAvailable() - qty);
+                break;
+
+            case SELLS:
+            case DAMAGE:
+            case MISSING:
+                stock.setQuantityAvailable(stock.getQuantityAvailable() + qty);
+                break;
+        }
+    }
+
+    // -------------------- APPLY NEW EFFECT --------------------
+    private void applyNewEffect(Stock stock, StockTransaction tx) {
+        int qty = tx.getQuantity();
+
+        switch (tx.getType()) {
+            case PURCHASE:
+            case RETURN:
+                stock.setQuantityAvailable(stock.getQuantityAvailable() + qty);
+                break;
+
+            case SELLS:
+            case DAMAGE:
+            case MISSING:
+                if (stock.getQuantityAvailable() < qty) {
+                    throw new RuntimeException("Not enough stock available after update!");
+                }
+                stock.setQuantityAvailable(stock.getQuantityAvailable() - qty);
+                break;
+        }
     }
 
     @Override
     public List<StockTransactionDto> getTransactionsForProduct(Integer productId) {
-        List<StockTransaction> transactions = transactionRepository.findByProductProductId(productId);
-        return transactions.stream().map(this::entityToDto).collect(Collectors.toList());
+        List<StockTransaction> transactions =
+                transactionRepository.findByProductProductId(productId);
+
+        return transactions.stream()
+                .map(this::entityToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
     public void deleteTransactionsByStockId(Integer stockId) {
-        List<StockTransaction> transactions = transactionRepository.findByStockStockId(stockId);
+        List<StockTransaction> transactions =
+                transactionRepository.findByStockStockId(stockId);
+
         if (transactions.isEmpty()) {
             throw new RuntimeException("No transactions found for stock ID: " + stockId);
         }
+
         transactionRepository.deleteAll(transactions);
     }
 
-    // Helper to convert Entity to DTO
-    private StockTransactionDto entityToDto(StockTransaction transaction) {
+    private StockTransactionDto entityToDto(StockTransaction tx) {
         StockTransactionDto dto = new StockTransactionDto();
-        dto.setStockTransId(transaction.getStockTransId());
-        dto.setType(transaction.getType());
-        dto.setQuantity(transaction.getQuantity());
-        dto.setStatus(transaction.getStatus());
-        dto.setReferenceId(transaction.getReferenceId());
-        dto.setTransactionDate(transaction.getTransactionDate());
-        dto.setProductId(transaction.getProduct().getProductId());
-        dto.setProductName(transaction.getProduct().getTitle());
-        // We don't store shopId in the transaction, so we can't set it here
+        dto.setStockTransId(tx.getStockTransId());
+        dto.setType(tx.getType());
+        dto.setQuantity(tx.getQuantity());
+        dto.setStatus(tx.getStatus());
+        dto.setReferenceId(tx.getReferenceId());
+        dto.setTransactionDate(tx.getTransactionDate());
+        dto.setProductId(tx.getProduct().getProductId());
+        dto.setProductName(tx.getProduct().getTitle());
         return dto;
     }
 }

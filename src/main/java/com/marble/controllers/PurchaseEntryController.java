@@ -37,12 +37,14 @@ public class PurchaseEntryController {
         return ResponseEntity.ok(purchaseEntry);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @PutMapping("/{id}")
     public ResponseEntity<PurchaseEntryDto> updatePurchaseEntry(@PathVariable Integer id,
                                                                 @RequestBody PurchaseEntryDto purchaseEntryDto) {
         PurchaseEntryDto updatedEntry = purchaseEntryService.updatePurchaseEntry(id, purchaseEntryDto);
         return ResponseEntity.ok(updatedEntry);
     }
+    
 
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @DeleteMapping("/{id}")

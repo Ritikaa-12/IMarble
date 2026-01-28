@@ -32,6 +32,17 @@ public class StockTransactionController {
         return ResponseEntity.ok(transactions);
     }
     
+    @PutMapping("/update/{transactionId}")
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','DISPATCHER')")
+    public ResponseEntity<StockTransactionDto> updateTransaction(
+            @PathVariable Integer transactionId,
+            @RequestBody StockTransactionDto dto) {
+
+        StockTransactionDto updatedTransaction = stockTransactionService.updateTransaction(transactionId, dto);
+        return ResponseEntity.ok(updatedTransaction);
+    }
+
+    
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public ResponseEntity<String> deleteTransactionsByStockId(@PathVariable Integer stockId) {
         stockTransactionService.deleteTransactionsByStockId(stockId);
